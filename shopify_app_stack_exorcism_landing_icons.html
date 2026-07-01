@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Shopify App-Stack Exorcism · 48h cleanup audit</title>
+<meta name="description" content="48h Shopify app-stack cleanup audit: cut ghost apps, reduce overlap, find haunted scripts, and keep useful machinery from breaking during the next promo.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Shopify App-Stack Exorcism · 48h cleanup audit">
+<meta property="og:description" content="Your Shopify apps formed a small government and started taxing you. Get a cut / keep / risk map in 48h.">
+<meta property="og:image" content="exports/quote_card_shopify_small_government.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Shopify App-Stack Exorcism · 48h cleanup audit">
+<meta name="twitter:description" content="Cut ghost apps, reduce overlap, find haunted scripts. Short memo. No consulting swamp.">
+<meta name="twitter:image" content="exports/quote_card_shopify_small_government.png">
+<style>
+  :root {
+    --ivory:#FAF9F5; --white:#FFFFFF; --slate:#141413;
+    --clay:#D97757; --olive:#788C5D; --rust:#B04A3F; --oat:#E3DACC;
+    --gray-150:#F0EEE6; --gray-300:#D1CFC5; --gray-500:#87867F; --gray-700:#3D3D3A;
+    --border:1.5px solid var(--gray-300);
+    --radius-panel:12px; --radius-row:8px; --radius-pill:999px;
+    --serif: ui-serif, Georgia, "Times New Roman", serif;
+    --sans: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    --mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html { scroll-behavior:smooth; }
+  body {
+    background:var(--ivory); color:var(--gray-700); font-family:var(--sans);
+    line-height:1.6; -webkit-font-smoothing:antialiased; padding:36px 20px 96px;
+  }
+  .page { max-width:1120px; margin:0 auto; }
+  .topbar {
+    display:flex; align-items:center; justify-content:space-between; gap:18px;
+    margin-bottom:34px; border-bottom:var(--border); padding-bottom:18px;
+  }
+  .brand { display:flex; align-items:center; gap:10px; font-family:var(--mono); font-size:12px; color:var(--gray-500); text-transform:uppercase; letter-spacing:.08em; }
+  .mark { width:28px; height:28px; border-radius:50%; background:var(--slate); color:var(--ivory); display:grid; place-items:center; font-size:15px; line-height:1; }
+  .nav { display:flex; gap:14px; align-items:center; flex-wrap:wrap; justify-content:flex-end; }
+  .nav a { color:var(--gray-500); text-decoration:none; font-family:var(--mono); font-size:12px; }
+  .nav a:hover { color:var(--clay); }
+
+  .hero { display:grid; grid-template-columns:minmax(0, 1.05fr) 420px; gap:34px; align-items:stretch; }
+  .eyebrow { font-family:var(--mono); font-size:11px; letter-spacing:.08em; text-transform:uppercase; color:var(--gray-500); margin-bottom:10px; }
+  h1 { font-family:var(--serif); font-weight:500; letter-spacing:-.025em; font-size:clamp(44px, 7vw, 82px); line-height:.94; color:var(--slate); }
+  h2 { font-family:var(--serif); font-weight:500; letter-spacing:-.01em; font-size:30px; color:var(--slate); margin-bottom:16px; }
+  h3 { font-family:var(--serif); font-weight:500; color:var(--slate); font-size:20px; margin-bottom:8px; }
+  .lead { margin-top:20px; font-size:20px; max-width:760px; color:var(--gray-700); }
+  .lead strong { color:var(--slate); font-weight:650; }
+  .hero-actions { display:flex; gap:12px; flex-wrap:wrap; margin-top:26px; }
+  .button {
+    display:inline-flex; align-items:center; justify-content:center; gap:8px;
+    border-radius:var(--radius-pill); padding:12px 18px; text-decoration:none;
+    font-family:var(--mono); font-size:12px; letter-spacing:.02em; border:1.5px solid var(--slate);
+  }
+  .button.primary { background:var(--slate); color:var(--ivory); }
+  .button.secondary { color:var(--slate); background:transparent; }
+  .button:hover { transform:translateY(-1px); }
+
+  .card { background:var(--white); border:var(--border); border-radius:var(--radius-panel); padding:22px; }
+  .hero-card { display:flex; flex-direction:column; justify-content:space-between; min-height:420px; position:relative; overflow:hidden; }
+  .hero-card:before { content:""; position:absolute; inset:auto -40px -70px auto; width:220px; height:220px; border-radius:50%; background:rgba(217,119,87,.12); }
+  .badge-row { display:flex; flex-wrap:wrap; gap:8px; margin-bottom:26px; position:relative; z-index:1; }
+  .pill { display:inline-block; border-radius:var(--radius-pill); padding:3px 10px; font-family:var(--mono); font-size:11px; background:var(--oat); color:var(--gray-700); }
+  .metric { position:relative; z-index:1; }
+  .metric .number { font-family:var(--serif); font-size:76px; line-height:1; color:var(--slate); letter-spacing:-.04em; }
+  .metric p { margin-top:8px; font-size:15px; color:var(--gray-700); }
+  .svg-icon { width:100%; height:100%; display:block; }
+  .tiny-broom { position:absolute; right:24px; bottom:18px; z-index:0; opacity:.72; transform:rotate(-14deg); width:76px; height:76px; color:var(--slate); }
+
+  .hardship-strip {
+    margin-top:28px; border:var(--border); border-radius:16px; background:rgba(255,255,255,.58);
+    padding:14px; display:grid; grid-template-columns:repeat(4,1fr); gap:1px;
+    box-shadow:0 10px 30px rgba(20,20,19,.025); overflow:hidden;
+  }
+  .hardship-item {
+    min-height:112px; padding:14px 16px; background:rgba(250,249,245,.72);
+    display:grid; grid-template-columns:42px minmax(0,1fr); gap:12px; align-items:start;
+  }
+  .hardship-item + .hardship-item { border-left:1px solid var(--gray-150); }
+  .hardship-icon {
+    width:42px; height:42px; border-radius:50%; background:rgba(217,119,87,.10);
+    padding:7px; color:var(--slate); opacity:.88;
+  }
+  .hardship-label { font-family:var(--mono); font-size:10px; letter-spacing:.08em; text-transform:uppercase; color:var(--gray-500); margin-bottom:3px; }
+  .hardship-item p { font-size:13px; line-height:1.45; color:var(--gray-700); }
+
+  .section { margin-top:68px; }
+  .split { display:grid; grid-template-columns:280px minmax(0,1fr); gap:34px; align-items:start; }
+  .split aside { position:sticky; top:24px; }
+  .section-kicker { font-family:var(--mono); font-size:12px; color:var(--gray-500); text-transform:uppercase; letter-spacing:.08em; }
+  .problem-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; }
+  .problem { min-height:156px; }
+  .problem .icon { width:34px; height:34px; border-radius:50%; display:grid; place-items:center; margin-bottom:12px; background:rgba(217,119,87,.12); color:var(--clay); font-family:var(--mono); }
+  .problem p, .deliverable p, .price p { font-size:14px; color:var(--gray-700); }
+
+  .outcome-band { background:var(--slate); color:#E8E6DF; border-radius:18px; padding:28px; display:grid; grid-template-columns:1fr 1fr; gap:24px; align-items:center; }
+  .outcome-band h2 { color:var(--ivory); margin:0; }
+  .outcome-list { display:grid; gap:10px; }
+  .check { display:flex; gap:10px; align-items:flex-start; font-size:15px; }
+  .check:before { content:"✓"; color:var(--olive); font-family:var(--mono); }
+
+  .deliverables { display:grid; grid-template-columns:repeat(2,1fr); gap:14px; }
+  .deliverable { border-left:4px solid var(--clay); }
+  .deliverable:nth-child(2n) { border-left-color:var(--olive); }
+
+  .risk-table { overflow:hidden; border-radius:var(--radius-panel); border:var(--border); background:var(--white); }
+  .risk-row { display:grid; grid-template-columns:150px minmax(0,1fr); border-top:1px solid var(--gray-150); }
+  .risk-row:first-child { border-top:0; }
+  .risk-label { font-family:var(--mono); font-size:12px; text-transform:uppercase; letter-spacing:.04em; background:var(--gray-150); padding:14px; color:var(--gray-500); }
+  .risk-copy { padding:14px; font-size:14px; }
+
+  .pricing { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; }
+  .price { position:relative; overflow:hidden; min-height:220px; }
+  .price.featured { border-color:var(--clay); box-shadow:0 10px 30px rgba(20,20,19,.06); }
+  .price .amount { font-family:var(--serif); font-size:42px; color:var(--slate); line-height:1; margin:12px 0; }
+  .price ul { margin:14px 0 0 18px; font-size:14px; color:var(--gray-700); }
+  .flag { display:inline-block; font-family:var(--mono); font-size:10px; text-transform:uppercase; letter-spacing:.08em; color:var(--clay); background:rgba(217,119,87,.09); border-radius:var(--radius-pill); padding:4px 9px; }
+
+  .how { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; counter-reset:step; }
+  .step { position:relative; padding-top:54px; }
+  .step:before { counter-increment:step; content:"0" counter(step); position:absolute; top:18px; left:20px; font-family:var(--mono); font-size:13px; color:var(--clay); }
+
+  .cta { background:var(--white); border:2px solid var(--slate); border-radius:22px; padding:34px; display:grid; grid-template-columns:1fr auto; gap:22px; align-items:center; }
+  .cta h2 { margin-bottom:8px; }
+  .footer { margin-top:32px; padding-top:18px; border-top:var(--border); color:var(--gray-500); font-family:var(--mono); font-size:11px; display:flex; justify-content:space-between; gap:12px; flex-wrap:wrap; }
+
+  @media (max-width:960px) {
+    .hero, .split, .outcome-band, .cta { grid-template-columns:1fr; }
+    .split aside { position:static; }
+    .problem-grid, .pricing, .how { grid-template-columns:1fr; }
+    .hardship-strip { grid-template-columns:repeat(2,1fr); }
+    .hardship-item:nth-child(odd) { border-left:0; }
+    .deliverables { grid-template-columns:1fr; }
+    .nav { display:none; }
+    .hero-card { min-height:340px; }
+  }
+  @media (max-width:560px) {
+    body { padding:24px 14px 72px; }
+    .topbar { align-items:flex-start; }
+    .metric .number { font-size:58px; }
+    .risk-row { grid-template-columns:1fr; }
+    .cta { padding:24px; }
+    .hardship-strip { grid-template-columns:1fr; padding:10px; }
+    .hardship-item { min-height:auto; }
+    .hardship-item + .hardship-item { border-left:0; border-top:1px solid var(--gray-150); }
+  }
+</style>
+</head>
+<body>
+<svg xmlns="http://www.w3.org/2000/svg" style="position:absolute;width:0;height:0;overflow:hidden">
+  <!-- Shopify App-Stack Exorcism · Store Owner Hardship Icons
+       Use: <svg viewBox="0 0 128 128"><use href="#icon-broom"/></svg>
+       Stroke: near-black #141413. Optional clay fills: rgba(217,119,87,.12). -->
+
+  <symbol id="icon-broom" viewBox="0 0 128 128">
+    <g fill="none" stroke="#141413" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M88 8 54 60"/>
+      <path d="M80 5c8 5 13 10 16 18"/>
+      <path d="M50 60c18 3 33 12 44 27"/>
+      <path d="M42 70c22 3 40 14 54 34"/>
+      <path d="M37 82c22 1 40 11 55 30"/>
+      <path d="M42 70c-10 20-14 38-11 56 25-1 48-11 66-28-7-19-22-35-47-44-2 4-5 9-8 16z" fill="rgba(217,119,87,.12)"/>
+      <path d="M31 126c16-13 32-24 48-33" opacity=".55"/>
+      <path d="M46 126c13-10 27-18 40-24" opacity=".55"/>
+      <path d="M63 122c10-7 20-12 30-16" opacity=".55"/>
+    </g>
+  </symbol>
+
+  <symbol id="icon-hose" viewBox="0 0 128 128">
+    <g fill="none" stroke="#141413" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M96 12C68 42 48 62 32 75c-20 17-14 45 10 50 22 4 38-10 38-29 0-14-9-23-22-23"/>
+      <path d="M90 16l24 24"/>
+      <path d="M104 30l14-14"/>
+      <path d="M50 76c11 3 19 11 20 22" opacity=".45"/>
+      <path d="M40 108c11 7 24 6 33-2" opacity=".45"/>
+    </g>
+  </symbol>
+
+  <symbol id="icon-hair-pull" viewBox="0 0 128 128">
+    <g fill="none" stroke="#141413" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M36 72c3-25 17-39 38-39 22 0 37 16 37 41"/>
+      <path d="M43 73c-14-11-23-12-32-4"/>
+      <path d="M103 73c10-13 18-16 25-8"/>
+      <path d="M52 85c9 10 31 12 45 0"/>
+      <path d="M59 100c12 7 25 7 36 0" opacity=".55"/>
+      <path d="M39 39c-11-13-19-21-24-24"/>
+      <path d="M92 34c8-12 17-21 27-27"/>
+      <path d="M57 30c-4-11-5-20-3-28"/>
+      <path d="M74 30c3-11 7-20 14-29"/>
+    </g>
+  </symbol>
+
+  <symbol id="icon-tiny-spear" viewBox="0 0 128 128">
+    <g fill="none" stroke="#141413" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M24 108 92 40"/>
+      <path d="M93 9 118 35 88 44z" fill="rgba(217,119,87,.12)"/>
+      <path d="M84 48 79 62"/>
+      <path d="M66 66 52 72" opacity=".55"/>
+      <path d="M37 95 22 100" opacity=".55"/>
+    </g>
+  </symbol>
+
+  <symbol id="icon-haunted-script" viewBox="0 0 128 128">
+    <g fill="none" stroke="#141413" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M28 18h72l10 12v80H28z"/>
+      <path d="M100 18v14h14"/>
+      <path d="M46 54 34 66l12 12"/>
+      <path d="M82 54 94 66 82 78"/>
+      <path d="M70 49 58 84"/>
+      <path d="M47 103c8-10 27-10 35 0" opacity=".5"/>
+      <path d="M52 34c2-9 12-9 14 0 2-9 12-9 14 0" opacity=".5"/>
+    </g>
+  </symbol>
+
+  <symbol id="icon-unauthorized-tax" viewBox="0 0 128 128">
+    <g fill="none" stroke="#141413" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="18" y="34" width="92" height="58" transform="rotate(-7 64 63)"/>
+      <circle cx="70" cy="68" r="28" opacity=".5"/>
+      <path d="M50 68h40"/>
+      <path d="M60 57h20"/>
+      <path d="M58 80h24"/>
+      <path d="M33 37c8-8 18-13 29-15" opacity=".35"/>
+    </g>
+  </symbol>
+
+  <symbol id="icon-sad-dashboard-sun" viewBox="0 0 128 128">
+    <g fill="none" stroke="#141413" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="16" y="30" width="96" height="70" rx="8"/>
+      <path d="M16 48h96" opacity=".45"/>
+      <path d="M32 78c8-18 20-19 29-2 9-20 25-18 35 0" fill="rgba(217,119,87,.12)"/>
+      <path d="M46 65h1"/>
+      <path d="M82 65h1"/>
+      <path d="M56 84c7-6 16-6 23 0"/>
+      <path d="M42 18v-8"/>
+      <path d="M64 18V6"/>
+      <path d="M86 18l5-10"/>
+    </g>
+  </symbol>
+
+  <symbol id="icon-small-government" viewBox="0 0 128 128">
+    <g fill="none" stroke="#141413" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M24 50h80"/>
+      <path d="M32 50v50"/>
+      <path d="M52 50v50"/>
+      <path d="M76 50v50"/>
+      <path d="M96 50v50"/>
+      <path d="M20 104h88"/>
+      <path d="M28 38 64 18l36 20z" fill="rgba(217,119,87,.12)"/>
+      <path d="M60 36h8"/>
+      <path d="M40 112h48" opacity=".45"/>
+      <path d="M110 54c5 9 5 18 0 27" opacity=".35"/>
+    </g>
+  </symbol>
+
+  <symbol id="icon-clipboard-gremlin" viewBox="0 0 128 128">
+    <g fill="none" stroke="#141413" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M38 22h52v88H38z"/>
+      <path d="M52 22c1-8 23-8 24 0"/>
+      <path d="M50 48h30"/>
+      <path d="M50 62h26"/>
+      <path d="M50 76h18"/>
+      <path d="M34 45 18 34"/>
+      <path d="M94 45l16-11"/>
+      <path d="M45 96c10-8 28-8 38 0" fill="rgba(217,119,87,.12)"/>
+      <path d="M56 88h1"/>
+      <path d="M73 88h1"/>
+      <path d="M28 34c-6-7-10-14-12-22" opacity=".5"/>
+      <path d="M100 34c5-7 9-14 12-22" opacity=".5"/>
+    </g>
+  </symbol>
+
+  <symbol id="icon-receipt-worm" viewBox="0 0 128 128">
+    <g fill="none" stroke="#141413" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M28 12h58l10 10v86l-8-6-8 6-8-6-8 6-8-6-8 6-8-6-8 6z"/>
+      <path d="M86 12v12h12"/>
+      <path d="M42 42h34"/>
+      <path d="M42 56h42"/>
+      <path d="M42 70h24"/>
+      <path d="M58 88c13-12 26-12 39 0" fill="rgba(217,119,87,.12)"/>
+      <path d="M70 82h1"/>
+      <path d="M90 82h1"/>
+      <path d="M76 96c7 3 13 3 19 0" opacity=".55"/>
+      <path d="M99 89c9 0 15 5 17 14" opacity=".45"/>
+    </g>
+  </symbol>
+</svg>
+
+
+  <div class="page">
+    <header class="topbar">
+      <div class="brand"><span class="mark">✦</span><span>Shopify App-Stack Exorcism</span></div>
+      <nav class="nav" aria-label="Page sections">
+        <a href="#problem">Problem</a>
+        <a href="#deliverables">Deliverables</a>
+        <a href="#pricing">Pricing</a>
+        <a href="#start">Start</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div>
+          <p class="eyebrow">48h cleanup audit for Shopify / DTC operators</p>
+          <h1>Kill ghost apps. Keep the useful machinery.</h1>
+          <p class="lead">Your store has accumulated operational barnacles: paid apps nobody remembers, scripts still touching the theme, overlapping tools, and DIY automations that work until Shopify changes something at the worst possible hour.</p>
+          <p class="lead"><strong>I remove the stuff costing speed, money, and sanity — without breaking the hull.</strong></p>
+          <div class="hero-actions">
+            <a class="button primary" href="mailto:gabriel@theflowyway.com?subject=Shopify%20App-Stack%20Exorcism%20Audit&body=Here%27s%20my%20Shopify%20app%20stack%20/%203-minute%20Loom%3A%0A%0AStore%3A%0AMain%20pain%3A%0AApps%20I%20suspect%3A%0A">Send the app list</a>
+            <a class="button secondary" href="#deliverables">What you get</a>
+          </div>
+        </div>
+
+        <div class="card hero-card" aria-label="Offer summary">
+          <div>
+            <div class="badge-row">
+              <span class="pill">48 hours</span>
+              <span class="pill">cut / keep / risk map</span>
+              <span class="pill">no strategy deck</span>
+            </div>
+            <div class="metric">
+              <div class="number">$497</div>
+              <p>Starter audit for small stores with a modest app stack. Deeper operator audits start at $1,200.</p>
+            </div>
+          </div>
+          <svg class="tiny-broom" viewBox="0 0 128 128" aria-hidden="true"><use href="#icon-broom"></use></svg>
+        </div>
+      </section>
+
+      <section class="hardship-strip" aria-label="App-stack hardship witnesses">
+        <div class="hardship-item">
+          <svg class="hardship-icon" viewBox="0 0 128 128" aria-hidden="true"><use href="#icon-unauthorized-tax"></use></svg>
+          <div><div class="hardship-label">Unauthorized tax</div><p>Monthly app creep hiding in the bill.</p></div>
+        </div>
+        <div class="hardship-item">
+          <svg class="hardship-icon" viewBox="0 0 128 128" aria-hidden="true"><use href="#icon-haunted-script"></use></svg>
+          <div><div class="hardship-label">Haunted script</div><p>The app left. Its code did not.</p></div>
+        </div>
+        <div class="hardship-item">
+          <svg class="hardship-icon" viewBox="0 0 128 128" aria-hidden="true"><use href="#icon-small-government"></use></svg>
+          <div><div class="hardship-label">Small government</div><p>Tools making policy inside the store.</p></div>
+        </div>
+        <div class="hardship-item">
+          <svg class="hardship-icon" viewBox="0 0 128 128" aria-hidden="true"><use href="#icon-sad-dashboard-sun"></use></svg>
+          <div><div class="hardship-label">Dashboard grief</div><p>Three panels disagreeing for support.</p></div>
+        </div>
+      </section>
+
+      <section id="problem" class="section split">
+        <aside>
+          <p class="section-kicker">The disease</p>
+          <h2>Apps form governments when nobody audits them.</h2>
+        </aside>
+        <div class="problem-grid">
+          <div class="card problem"><div class="icon">01</div><h3>Ghost bills</h3><p>Old tools, forgotten trials, duplicate apps, and subscriptions still charging rent for work nobody can name.</p></div>
+          <div class="card problem"><div class="icon">02</div><h3>Haunted scripts</h3><p>Embeds, pixels, chat widgets, review snippets, and app residue still touching the theme after the decision-maker moved on.</p></div>
+          <div class="card problem"><div class="icon">03</div><h3>Brittle DIY</h3><p>Homemade replacements can be correct and still dangerous: API drift, retry gaps, inventory edge cases, promo-week chaos.</p></div>
+        </div>
+      </section>
+
+      <section class="section outcome-band" aria-label="Primary outcome">
+        <h2>In 48 hours, you get a cleanup map you can act on.</h2>
+        <div class="outcome-list">
+          <div class="check">What to cut because it is probably dead weight.</div>
+          <div class="check">What to keep because it earns its rent.</div>
+          <div class="check">What not to touch yet because removal could break checkout, subscriptions, fulfillment, tracking, or support.</div>
+          <div class="check">What needs fixing before it turns into a promo-week incident.</div>
+        </div>
+      </section>
+
+      <section id="deliverables" class="section split">
+        <aside>
+          <p class="section-kicker">The memo</p>
+          <h2>Short enough to read. Specific enough to use.</h2>
+        </aside>
+        <div class="deliverables">
+          <div class="card deliverable"><h3>App-stack inventory</h3><p>Installed apps, likely duplicates, forgotten tools, and high-risk dependencies.</p></div>
+          <div class="card deliverable"><h3>Cut / keep / investigate map</h3><p>Each tool gets a verdict. No blind deletion. No “delete everything and pray.”</p></div>
+          <div class="card deliverable"><h3>Theme/script residue check</h3><p>Scripts, embeds, pixels, widgets, and app leftovers that may still be taxing performance.</p></div>
+          <div class="card deliverable"><h3>Overlap map</h3><p>Reviews, bundles, upsells, analytics, shipping rules, subscriptions, email capture, chat, support, tracking.</p></div>
+          <div class="card deliverable"><h3>DIY failure-mode pass</h3><p>API drift, retry logic, sync assumptions, order/subscription edge cases, and “works on Tuesday, ruins Friday” risk.</p></div>
+          <div class="card deliverable"><h3>Cleanup sequence</h3><p>The order of operations: what to remove first, what to test, and where to verify nothing broke.</p></div>
+        </div>
+      </section>
+
+      <section class="section split">
+        <aside>
+          <p class="section-kicker">The verdicts</p>
+          <h2>Some apps should stay. Some should die.</h2>
+        </aside>
+        <div class="risk-table">
+          <div class="risk-row"><div class="risk-label">Keep</div><div class="risk-copy">It earns rent, owns a critical flow, or would cost more to replace than to keep.</div></div>
+          <div class="risk-row"><div class="risk-label">Cut</div><div class="risk-copy">Dead weight, duplicate function, forgotten billing, or low-value drag on speed and attention.</div></div>
+          <div class="risk-row"><div class="risk-label">Investigate</div><div class="risk-copy">Possible value, unclear dependency, unknown script behavior, or missing ownership.</div></div>
+          <div class="risk-row"><div class="risk-label">Do not touch yet</div><div class="risk-copy">Removal could break checkout, subscriptions, fulfillment, analytics, or customer support. Watch with a tiny spear.</div></div>
+        </div>
+      </section>
+
+      <section id="pricing" class="section split">
+        <aside>
+          <p class="section-kicker">Pricing</p>
+          <h2>Flat-rate, boring outcome. No consulting swamp.</h2>
+        </aside>
+        <div class="pricing">
+          <div class="card price">
+            <span class="flag">Starter</span>
+            <h3>Starter Audit</h3>
+            <div class="amount">$497</div>
+            <p>For small stores with a modest app stack.</p>
+            <ul><li>Cleanup memo</li><li>Cut / keep / risk table</li><li>No implementation</li></ul>
+          </div>
+          <div class="card price featured">
+            <span class="flag">Best fit</span>
+            <h3>Operator Audit</h3>
+            <div class="amount">$1,200</div>
+            <p>For stores with subscriptions, support, tracking, fulfillment, inventory, or DIY workflows.</p>
+            <ul><li>Deeper failure-mode pass</li><li>Dependency risk notes</li><li>Cleanup sequence</li></ul>
+          </div>
+          <div class="card price">
+            <span class="flag">If safe</span>
+            <h3>Cleanup Sprint</h3>
+            <div class="amount">$2k+</div>
+            <p>Audit plus assisted cleanup / implementation.</p>
+            <ul><li>Only after audit</li><li>Only if worth doing</li><li>No heroics on live checkout</li></ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="section split">
+        <aside>
+          <p class="section-kicker">Process</p>
+          <h2>You do not need to care how the broom works.</h2>
+        </aside>
+        <div class="how">
+          <div class="card step"><h3>Send context</h3><p>App list, Shopify Apps screen, current pain, optional 3-minute Loom. No 19-question intake opera.</p></div>
+          <div class="card step"><h3>Audit the machine</h3><p>Apps, overlap, scripts, risk, dependencies, DIY automation edges, and the stuff nobody wants to touch.</p></div>
+          <div class="card step"><h3>Get the map</h3><p>Cut / keep / risk memo with the cleanup sequence. If implementation is safe, that can be quoted separately.</p></div>
+        </div>
+      </section>
+
+      <section id="start" class="section cta">
+        <div>
+          <p class="section-kicker">Start here</p>
+          <h2>Send the app list or a 3-minute Loom.</h2>
+          <p>I’ll tell you if the store looks worth auditing. If the gremlins are harmless today, I’ll say so and spare both of us the tiny circus.</p>
+        </div>
+        <a class="button primary" href="mailto:gabriel@theflowyway.com?subject=Shopify%20App-Stack%20Exorcism%20Audit&body=Here%27s%20my%20Shopify%20app%20stack%20/%203-minute%20Loom%3A%0A%0AStore%3A%0AMain%20pain%3A%0AApps%20I%20suspect%3A%0A">Send context</a>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <span>Shopify App-Stack Exorcism · 48h cleanup audit</span>
+      <span>Fewer bills · faster store · less haunted machinery</span>
+    </footer>
+  </div>
+</body>
+</html>

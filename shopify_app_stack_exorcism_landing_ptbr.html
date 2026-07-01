@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Shopify App-Stack Exorcism · Auditoria de 48h</title>
+<meta name="description" content="Auditoria de 48h para lojas Shopify: mapa do que corta, fica, assombra e pode quebrar antes da próxima promoção.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Shopify App-Stack Exorcism · Auditoria de 48h">
+<meta property="og:description" content="Seus apps da Shopify montaram uma prefeitura dentro da sua loja. Manda a lista de apps; eu levo a vassoura.">
+<meta property="og:image" content="exports/quote_card_ptbr_prefeitura.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Shopify App-Stack Exorcism · Auditoria de 48h">
+<meta name="twitter:description" content="Mapa corta / fica / risco, scripts fantasmas e mensalidade escondida. Sem palestra. Só vassoura.">
+<meta name="twitter:image" content="exports/quote_card_ptbr_prefeitura.png">
+<style>
+  :root {
+    --paper:#FAF9F5; --white:#FFFFFF; --ink:#141413;
+    --clay:#D97757; --olive:#788C5D; --oat:#E3DACC;
+    --grid:#D1CFC5; --muted:#87867F; --body:#3D3D3A;
+    --soft:#F0EEE6; --border:1.5px solid var(--grid);
+    --serif:ui-serif, Georgia, "Times New Roman", serif;
+    --sans:system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    --mono:ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  html { scroll-behavior:smooth; }
+  body {
+    min-height:100vh; padding:34px 20px 88px; color:var(--body); font-family:var(--sans); line-height:1.58;
+    background:
+      radial-gradient(circle at 1px 1px, rgba(20,20,19,.11) 1px, transparent 0) 0 0 / 28px 28px,
+      linear-gradient(90deg, rgba(209,207,197,.22) 1px, transparent 1px) 0 0 / 84px 84px,
+      var(--paper);
+    -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility;
+  }
+  svg.sprite { position:absolute; width:0; height:0; overflow:hidden; }
+  .page { max-width:1120px; margin:0 auto; }
+  .topbar {
+    display:flex; align-items:center; justify-content:space-between; gap:18px; padding:0 0 18px;
+    border-bottom:var(--border); margin-bottom:34px;
+  }
+  .brand { display:flex; align-items:center; gap:10px; font-family:var(--mono); font-size:12px; color:var(--muted); letter-spacing:.08em; text-transform:uppercase; }
+  .brand-mark { width:30px; height:30px; display:grid; place-items:center; border:1.5px solid var(--ink); border-radius:50%; background:var(--paper); }
+  .brand-mark svg { width:19px; height:19px; }
+  .nav { display:flex; gap:14px; align-items:center; justify-content:flex-end; flex-wrap:wrap; }
+  .nav a { color:var(--muted); text-decoration:none; font-family:var(--mono); font-size:12px; }
+  .nav a:hover { color:var(--clay); }
+
+  .hero { display:grid; grid-template-columns:minmax(0,1.04fr) 424px; gap:34px; align-items:stretch; }
+  .eyebrow, .section-kicker, .stamp, .pill, .flag, .notice-label, .footer { font-family:var(--mono); }
+  .eyebrow { font-size:11px; color:var(--muted); letter-spacing:.09em; text-transform:uppercase; margin-bottom:12px; }
+  h1 { font-family:var(--serif); font-weight:500; letter-spacing:-.028em; font-size:clamp(43px, 7.2vw, 84px); line-height:.94; color:var(--ink); max-width:790px; }
+  h2 { font-family:var(--serif); font-weight:500; letter-spacing:-.012em; font-size:clamp(29px, 4vw, 42px); line-height:1.04; color:var(--ink); margin-bottom:14px; }
+  h3 { font-family:var(--serif); font-weight:500; color:var(--ink); font-size:21px; line-height:1.12; margin-bottom:8px; }
+  .lead { margin-top:20px; max-width:770px; font-size:20px; color:var(--body); }
+  .lead strong { color:var(--ink); font-weight:650; }
+  .hero-actions { display:flex; gap:12px; flex-wrap:wrap; align-items:center; margin-top:26px; }
+  .button {
+    display:inline-flex; align-items:center; justify-content:center; gap:9px; border-radius:999px; padding:12px 18px;
+    border:1.5px solid var(--ink); text-decoration:none; font-family:var(--mono); font-size:12px; letter-spacing:.02em;
+    transition:transform .12s ease, background .12s ease;
+  }
+  .button svg { width:18px; height:18px; }
+  .button.primary { background:var(--ink); color:var(--paper); }
+  .button.primary svg * { stroke:var(--paper); }
+  .button.secondary { color:var(--ink); background:rgba(250,249,245,.58); }
+  .button:hover { transform:translateY(-1px); }
+  .microcopy { margin-top:12px; color:var(--muted); font-size:13px; }
+
+  .card { background:rgba(255,255,255,.82); border:var(--border); border-radius:12px; padding:22px; box-shadow:0 12px 35px rgba(20,20,19,.035); }
+  .hero-card { position:relative; overflow:hidden; min-height:438px; display:flex; flex-direction:column; justify-content:space-between; }
+  .hero-card:before { content:""; position:absolute; right:-54px; bottom:-70px; width:236px; height:236px; border:double 6px rgba(217,119,87,.23); border-radius:50%; transform:rotate(-12deg); }
+  .stamp {
+    position:absolute; right:24px; top:104px; width:150px; height:150px; border:double 5px rgba(120,140,93,.38); border-radius:50%;
+    display:grid; place-items:center; text-align:center; color:rgba(120,140,93,.72); font-size:11px; letter-spacing:.08em; text-transform:uppercase;
+    transform:rotate(11deg); pointer-events:none;
+  }
+  .badge-row { display:flex; gap:8px; flex-wrap:wrap; position:relative; z-index:1; margin-bottom:28px; }
+  .pill { display:inline-block; border-radius:999px; padding:3px 10px; font-size:11px; background:var(--oat); color:var(--body); }
+  .notice-label { color:var(--muted); font-size:11px; text-transform:uppercase; letter-spacing:.09em; margin-bottom:8px; }
+  .price-note { position:relative; z-index:1; }
+  .amount { font-family:var(--serif); font-size:76px; line-height:1; letter-spacing:-.045em; color:var(--ink); margin-bottom:10px; }
+  .price-note p { max-width:280px; font-size:15px; }
+  .hero-icon { position:absolute; right:22px; bottom:18px; width:82px; height:82px; opacity:.78; transform:rotate(-12deg); }
+
+  .section { margin-top:68px; }
+  .split { display:grid; grid-template-columns:280px minmax(0,1fr); gap:34px; align-items:start; }
+  .split aside { position:sticky; top:24px; }
+  .section-kicker { font-size:12px; color:var(--muted); text-transform:uppercase; letter-spacing:.08em; margin-bottom:9px; }
+  .problem-grid, .how, .pricing { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; }
+  .problem { min-height:186px; }
+  .icon { width:42px; height:42px; margin-bottom:14px; display:grid; place-items:center; border-radius:50%; background:rgba(217,119,87,.11); }
+  .icon svg { width:30px; height:30px; }
+  .problem p, .deliverable p, .price p, .step p, .risk-copy { font-size:14px; color:var(--body); }
+
+  .quote-strip { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; }
+  .quote { min-height:180px; display:flex; flex-direction:column; justify-content:space-between; }
+  .quote p { font-family:var(--serif); font-size:25px; line-height:1.08; color:var(--ink); letter-spacing:-.012em; }
+  .quote small { display:block; margin-top:18px; font-family:var(--mono); color:var(--muted); font-size:11px; text-transform:uppercase; letter-spacing:.08em; }
+
+  .outcome-band { background:var(--ink); color:#E8E6DF; border-radius:18px; padding:30px; display:grid; grid-template-columns:1fr 1fr; gap:24px; align-items:center; }
+  .outcome-band h2 { color:var(--paper); margin:0; }
+  .outcome-list { display:grid; gap:10px; }
+  .check { display:flex; gap:10px; align-items:flex-start; font-size:15px; }
+  .check:before { content:"✓"; color:var(--olive); font-family:var(--mono); font-weight:700; }
+
+  .deliverables { display:grid; grid-template-columns:repeat(2,1fr); gap:14px; }
+  .deliverable { border-left:4px solid var(--clay); }
+  .deliverable:nth-child(2n) { border-left-color:var(--olive); }
+
+  .risk-table { overflow:hidden; border-radius:12px; border:var(--border); background:rgba(255,255,255,.82); }
+  .risk-row { display:grid; grid-template-columns:158px minmax(0,1fr); border-top:1px solid var(--soft); }
+  .risk-row:first-child { border-top:0; }
+  .risk-label { padding:14px; background:var(--soft); color:var(--muted); font-family:var(--mono); font-size:12px; letter-spacing:.04em; text-transform:uppercase; }
+  .risk-copy { padding:14px; }
+
+  .price { min-height:230px; position:relative; overflow:hidden; }
+  .price.featured { border-color:var(--clay); box-shadow:0 12px 34px rgba(20,20,19,.065); }
+  .price .amount { font-size:41px; margin:13px 0; }
+  .price ul { margin:14px 0 0 18px; color:var(--body); font-size:14px; }
+  .payment-note { grid-column:1/-1; border:1px dashed rgba(20,20,19,.28); background:rgba(255,255,255,.55); border-radius:12px; padding:16px 18px; color:var(--body); font-size:15px; }
+  .payment-note strong { color:var(--ink); }
+  .flag { display:inline-block; border-radius:999px; padding:4px 9px; background:rgba(217,119,87,.09); color:var(--clay); font-size:10px; text-transform:uppercase; letter-spacing:.08em; margin-bottom:11px; }
+
+  .how { counter-reset:step; }
+  .step { position:relative; padding-top:54px; }
+  .step:before { counter-increment:step; content:"0" counter(step); position:absolute; top:18px; left:20px; color:var(--clay); font-family:var(--mono); font-size:13px; }
+
+  .cta { background:rgba(255,255,255,.86); border:2px solid var(--ink); border-radius:22px; padding:34px; display:grid; grid-template-columns:1fr auto; gap:22px; align-items:center; }
+  .cta h2 { margin-bottom:8px; }
+  .footer { margin-top:32px; padding-top:18px; border-top:var(--border); color:var(--muted); font-size:11px; display:flex; justify-content:space-between; gap:12px; flex-wrap:wrap; }
+
+  @media (max-width:960px) {
+    .hero, .split, .outcome-band, .cta { grid-template-columns:1fr; }
+    .split aside { position:static; }
+    .problem-grid, .quote-strip, .pricing, .how { grid-template-columns:1fr; }
+    .deliverables { grid-template-columns:1fr; }
+    .nav { display:none; }
+    .hero-card { min-height:340px; }
+  }
+  @media (max-width:560px) {
+    body { padding:24px 14px 70px; }
+    .topbar { align-items:flex-start; }
+    .amount { font-size:58px; }
+    .risk-row { grid-template-columns:1fr; }
+    .cta { padding:24px; }
+  }
+</style>
+</head>
+<body>
+  <svg class="sprite" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <symbol id="icon-broom" viewBox="0 0 128 128"><g fill="none" stroke="#141413" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><path d="M88 8 54 60"/><path d="M80 5c8 5 13 10 16 18"/><path d="M50 60c18 3 33 12 44 27"/><path d="M42 70c22 3 40 14 54 34"/><path d="M37 82c22 1 40 11 55 30"/><path d="M42 70c-10 20-14 38-11 56 25-1 48-11 66-28-7-19-22-35-47-44-2 4-5 9-8 16z" fill="rgba(217,119,87,.12)"/><path d="M31 126c16-13 32-24 48-33" opacity=".55"/><path d="M46 126c13-10 27-18 40-24" opacity=".55"/><path d="M63 122c10-7 20-12 30-16" opacity=".55"/></g></symbol>
+    <symbol id="icon-hose" viewBox="0 0 128 128"><g fill="none" stroke="#141413" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><path d="M96 12C68 42 48 62 32 75c-20 17-14 45 10 50 22 4 38-10 38-29 0-14-9-23-22-23"/><path d="M90 16l24 24"/><path d="M104 30l14-14"/><path d="M50 76c11 3 19 11 20 22" opacity=".45"/><path d="M40 108c11 7 24 6 33-2" opacity=".45"/></g></symbol>
+    <symbol id="icon-hair-pull" viewBox="0 0 128 128"><g fill="none" stroke="#141413" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><path d="M36 72c3-25 17-39 38-39 22 0 37 16 37 41"/><path d="M43 73c-14-11-23-12-32-4"/><path d="M103 73c10-13 18-16 25-8"/><path d="M52 85c9 10 31 12 45 0"/><path d="M59 100c12 7 25 7 36 0" opacity=".55"/><path d="M39 39c-11-13-19-21-24-24"/><path d="M92 34c8-12 17-21 27-27"/><path d="M57 30c-4-11-5-20-3-28"/><path d="M74 30c3-11 7-20 14-29"/></g></symbol>
+    <symbol id="icon-tiny-spear" viewBox="0 0 128 128"><g fill="none" stroke="#141413" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><path d="M24 108 92 40"/><path d="M93 9 118 35 88 44z" fill="rgba(217,119,87,.12)"/><path d="M84 48 79 62"/><path d="M66 66 52 72" opacity=".55"/><path d="M37 95 22 100" opacity=".55"/></g></symbol>
+    <symbol id="icon-haunted-script" viewBox="0 0 128 128"><g fill="none" stroke="#141413" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><path d="M28 18h72l10 12v80H28z"/><path d="M100 18v14h14"/><path d="M46 54 34 66l12 12"/><path d="M82 54 94 66 82 78"/><path d="M70 49 58 84"/><path d="M47 103c8-10 27-10 35 0" opacity=".5"/><path d="M52 34c2-9 12-9 14 0 2-9 12-9 14 0" opacity=".5"/></g></symbol>
+    <symbol id="icon-unauthorized-tax" viewBox="0 0 128 128"><g fill="none" stroke="#141413" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><rect x="18" y="34" width="92" height="58" transform="rotate(-7 64 63)"/><circle cx="70" cy="68" r="28" opacity=".5"/><path d="M50 68h40"/><path d="M60 57h20"/><path d="M58 80h24"/><path d="M33 37c8-8 18-13 29-15" opacity=".35"/></g></symbol>
+    <symbol id="icon-sad-dashboard-sun" viewBox="0 0 128 128"><g fill="none" stroke="#141413" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><rect x="16" y="30" width="96" height="70" rx="8"/><path d="M16 48h96" opacity=".45"/><path d="M32 78c8-18 20-19 29-2 9-20 25-18 35 0" fill="rgba(217,119,87,.12)"/><path d="M46 65h1"/><path d="M82 65h1"/><path d="M56 84c7-6 16-6 23 0"/><path d="M42 18v-8"/><path d="M64 18V6"/><path d="M86 18l5-10"/></g></symbol>
+    <symbol id="icon-small-government" viewBox="0 0 128 128"><g fill="none" stroke="#141413" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><path d="M24 50h80"/><path d="M32 50v50"/><path d="M52 50v50"/><path d="M76 50v50"/><path d="M96 50v50"/><path d="M20 104h88"/><path d="M28 38 64 18l36 20z" fill="rgba(217,119,87,.12)"/><path d="M60 36h8"/><path d="M40 112h48" opacity=".45"/><path d="M110 54c5 9 5 18 0 27" opacity=".35"/></g></symbol>
+    <symbol id="icon-clipboard-gremlin" viewBox="0 0 128 128"><g fill="none" stroke="#141413" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><path d="M38 22h52v88H38z"/><path d="M52 22c1-8 23-8 24 0"/><path d="M50 48h30"/><path d="M50 62h26"/><path d="M50 76h18"/><path d="M34 45 18 34"/><path d="M94 45l16-11"/><path d="M45 96c10-8 28-8 38 0" fill="rgba(217,119,87,.12)"/><path d="M56 88h1"/><path d="M73 88h1"/><path d="M28 34c-6-7-10-14-12-22" opacity=".5"/><path d="M100 34c5-7 9-14 12-22" opacity=".5"/></g></symbol>
+    <symbol id="icon-receipt-worm" viewBox="0 0 128 128"><g fill="none" stroke="#141413" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><path d="M28 12h58l10 10v86l-8-6-8 6-8-6-8 6-8-6-8 6-8-6-8 6z"/><path d="M86 12v12h12"/><path d="M42 42h34"/><path d="M42 56h42"/><path d="M42 70h24"/><path d="M58 88c13-12 26-12 39 0" fill="rgba(217,119,87,.12)"/><path d="M70 82h1"/><path d="M90 82h1"/><path d="M76 96c7 3 13 3 19 0" opacity=".55"/><path d="M99 89c9 0 15 5 17 14" opacity=".45"/></g></symbol>
+  </svg>
+
+  <div class="page">
+    <header class="topbar">
+      <div class="brand"><span class="brand-mark"><svg viewBox="0 0 128 128"><use href="#icon-broom"></use></svg></span><span>Shopify App-Stack Exorcism</span></div>
+      <nav class="nav" aria-label="Seções da página">
+        <a href="#problema">Problema</a>
+        <a href="#entrega">Entrega</a>
+        <a href="#preco">Preço</a>
+        <a href="#comecar">Começar</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div>
+          <p class="eyebrow">Auditoria de 48h para lojas Shopify / operação DTC</p>
+          <h1>Seus apps da Shopify montaram uma prefeitura dentro da sua loja.</h1>
+          <p class="lead">Uma auditoria de 48h para descobrir o que fica, o que sai, e quais <strong>scripts fantasmas</strong> ainda estão pesando sua loja.</p>
+          <p class="lead"><strong>Mapa de corte, permanência e risco — antes da próxima promoção travar por causa de uma reunião de app.</strong></p>
+          <div class="hero-actions">
+            <a class="button primary" href="mailto:gabriel@theflowyway.com?subject=Auditoria%20Shopify%20App-Stack%20Exorcism&body=Minha%20lista%20de%20apps%20/%20Loom%20de%203%20minutos%3A%0A%0ALoja%3A%0ADor%20principal%3A%0AApps%20suspeitos%3A%0APromo%C3%A7%C3%A3o%20ou%20fluxo%20cr%C3%ADtico%3A%0A"><svg viewBox="0 0 128 128"><use href="#icon-broom"></use></svg>Manda a lista de apps</a>
+            <a class="button secondary" href="#entrega">Ver o relatório</a>
+          </div>
+          <p class="microcopy">Sem palestra de crescimento. Sem “hack”. Só uma vassoura e um relatório honesto.</p>
+        </div>
+
+        <div class="card hero-card" aria-label="Resumo da oferta">
+          <div>
+            <div class="badge-row">
+              <span class="pill">48 horas</span>
+              <span class="pill">corte / fica / risco</span>
+              <span class="pill">sem slide motivacional</span>
+            </div>
+            <div class="notice-label">Notificação operacional</div>
+            <div class="price-note">
+              <div class="amount">R$497</div>
+              <p>Auditoria inicial para lojas menores com uma stack moderada. PIX, cartão e parcelamento disponíveis.</p>
+            </div>
+          </div>
+          <div class="stamp">Prefeitura<br>detectada</div>
+          <svg class="hero-icon" viewBox="0 0 128 128" aria-hidden="true"><use href="#icon-small-government"></use></svg>
+        </div>
+      </section>
+
+      <section id="problema" class="section split">
+        <aside>
+          <p class="section-kicker">A doença</p>
+          <h2>App sem auditoria vira regra, boleto e poeira no tema.</h2>
+        </aside>
+        <div class="problem-grid">
+          <div class="card problem"><div class="icon"><svg viewBox="0 0 128 128"><use href="#icon-receipt-worm"></use></svg></div><h3>Mensalidade escondida</h3><p>Ferramenta antiga, teste esquecido, função duplicada e app emitindo boleto por um trabalho que ninguém sabe explicar.</p></div>
+          <div class="card problem"><div class="icon"><svg viewBox="0 0 128 128"><use href="#icon-haunted-script"></use></svg></div><h3>Script fantasma</h3><p>Você apagou o app. O script ficou morando lá: pixel, widget, snippet, embed e resto de tema tocando a loja sem pedir licença.</p></div>
+          <div class="card problem"><div class="icon"><svg viewBox="0 0 128 128"><use href="#icon-hair-pull"></use></svg></div><h3>Painel mentindo</h3><p>Um painel diz venda. Outro diz prejuízo. O terceiro está mentindo por apoio emocional enquanto a promoção prepara um susto.</p></div>
+        </div>
+      </section>
+
+      <section class="section quote-strip" aria-label="Acusações principais">
+        <div class="card quote"><p>Você apagou o app. O script ficou morando lá.</p><small>resíduo no código</small></div>
+        <div class="card quote"><p>O problema não é a mensalidade. É ninguém saber explicar metade dela.</p><small>boleto sem dono</small></div>
+        <div class="card quote"><p>O cliente só queria comprar. A loja abriu uma reunião de comitê.</p><small>checkout com assembleia</small></div>
+      </section>
+
+      <section class="section outcome-band" aria-label="Resultado principal">
+        <h2>Em 48 horas, você recebe um mapa de limpeza que dá para usar.</h2>
+        <div class="outcome-list">
+          <div class="check">o que cortar porque virou entulho, duplicidade ou boleto sem explicação.</div>
+          <div class="check">o que manter porque paga o próprio aluguel e segura fluxo crítico.</div>
+          <div class="check">o que investigar porque parece útil, mas ninguém sabe onde encosta.</div>
+          <div class="check">o que não mexer ainda porque pode quebrar checkout, assinatura, fulfillment, tracking ou suporte.</div>
+        </div>
+      </section>
+
+      <section id="entrega" class="section split">
+        <aside>
+          <p class="section-kicker">O memorando</p>
+          <h2>Curto o bastante para ler. Específico o bastante para limpar.</h2>
+        </aside>
+        <div class="deliverables">
+          <div class="card deliverable"><h3>Inventário da app-stack</h3><p>Apps instalados, duplicidades prováveis, ferramentas esquecidas e dependências que merecem respeito.</p></div>
+          <div class="card deliverable"><h3>Mapa corta / fica / investiga</h3><p>Cada app recebe um veredito. Nada de sair deletando e rezar para o checkout continuar vivo.</p></div>
+          <div class="card deliverable"><h3>Caça a script fantasma</h3><p>Scripts, embeds, pixels, widgets e sobras que podem estar pesando a loja mesmo depois da desinstalação.</p></div>
+          <div class="card deliverable"><h3>Sobreposição de ferramentas</h3><p>Reviews, bundles, upsell, analytics, frete, assinatura, captura de e-mail, chat, suporte e tracking brigando pela mesma gaveta.</p></div>
+          <div class="card deliverable"><h3>Risco de automação caseira</h3><p>API mudando, retry faltando, sincronização frágil, estoque, assinatura e o clássico “funciona terça, derruba sexta”.</p></div>
+          <div class="card deliverable"><h3>Sequência de limpeza</h3><p>A ordem segura: o que remover primeiro, o que testar e onde confirmar que nada virou incêndio.</p></div>
+        </div>
+      </section>
+
+      <section class="section split">
+        <aside>
+          <p class="section-kicker">Os vereditos</p>
+          <h2>Nem todo app é vilão. Alguns estão só fazendo hora extra.</h2>
+        </aside>
+        <div class="risk-table">
+          <div class="risk-row"><div class="risk-label">Fica</div><div class="risk-copy">Paga o aluguel, segura fluxo crítico ou custaria mais trocar do que manter.</div></div>
+          <div class="risk-row"><div class="risk-label">Corta</div><div class="risk-copy">Entulho, função duplicada, cobrança esquecida ou peso baixo valor em velocidade e atenção.</div></div>
+          <div class="risk-row"><div class="risk-label">Investiga</div><div class="risk-copy">Pode ter valor, mas a dependência é obscura, o script é suspeito ou ninguém assumiu a guarda.</div></div>
+          <div class="risk-row"><div class="risk-label">Não mexe ainda</div><div class="risk-copy">Remover pode quebrar checkout, assinatura, fulfillment, analytics ou suporte. Fica sob vigilância com uma lança pequena.</div></div>
+        </div>
+      </section>
+
+      <section id="preco" class="section split">
+        <aside>
+          <p class="section-kicker">Preço</p>
+          <h2>Valor fechado. Resultado chato. Sem pântano de consultoria.</h2>
+        </aside>
+        <div class="pricing">
+          <div class="card price"><span class="flag">Entrada</span><h3>Raio-X inicial</h3><div class="amount">R$197</div><p>Para descobrir se vale abrir a vassoura sem comprar uma auditoria inteira.</p><ul><li>Olhar inicial na lista de apps</li><li>2–3 suspeitos principais</li><li>Crédito na auditoria se avançar</li></ul></div>
+          <div class="card price featured"><span class="flag">Melhor encaixe</span><h3>Auditoria inicial</h3><div class="amount">R$497</div><p>Para lojas menores com uma stack moderada e sinais claros de boleto, lentidão ou script fantasma.</p><ul><li>Memorando de limpeza</li><li>Tabela corta / fica / risco</li><li>Sem implementação</li></ul></div>
+          <div class="card price"><span class="flag">Operação</span><h3>Auditoria de operação</h3><div class="amount">R$997+</div><p>Para lojas com assinatura, suporte, tracking, fulfillment, estoque ou fluxo caseiro.</p><ul><li>Passada de risco mais funda</li><li>Notas de dependência</li><li>Sequência de limpeza</li></ul></div>
+          <div class="payment-note"><strong>Pagamento:</strong> PIX à vista, cartão/QR-code e parcelamento por link bancário. Mutirão de limpeza só é cotado depois da auditoria, se for seguro e valer a pena.</div>
+        </div>
+      </section>
+
+      <section class="section split">
+        <aside>
+          <p class="section-kicker">Processo</p>
+          <h2>Você não precisa saber como a vassoura funciona.</h2>
+        </aside>
+        <div class="how">
+          <div class="card step"><h3>Manda contexto</h3><p>Lista de apps, tela de Apps da Shopify, dor atual e, se quiser, um Loom de 3 minutos. Sem novela de briefing.</p></div>
+          <div class="card step"><h3>Eu abro o gabinete</h3><p>Apps, sobreposição, scripts, risco, dependências, automações caseiras e o canto que todo mundo evita mexer.</p></div>
+          <div class="card step"><h3>Você recebe o mapa</h3><p>Memorando de corta / fica / risco com sequência de limpeza. Se implementação fizer sentido, isso é cotado à parte.</p></div>
+        </div>
+      </section>
+
+      <section id="comecar" class="section cta">
+        <div>
+          <p class="section-kicker">Comece aqui</p>
+          <h2>Manda a lista de apps ou um Loom de 3 minutos.</h2>
+          <p>Eu digo se a loja parece valer uma auditoria. Se os gremlins estiverem quietos por enquanto, eu falo também e poupo o circo pequeno.</p>
+        </div>
+        <a class="button primary" href="mailto:gabriel@theflowyway.com?subject=Auditoria%20Shopify%20App-Stack%20Exorcism&body=Minha%20lista%20de%20apps%20/%20Loom%20de%203%20minutos%3A%0A%0ALoja%3A%0ADor%20principal%3A%0AApps%20suspeitos%3A%0APromo%C3%A7%C3%A3o%20ou%20fluxo%20cr%C3%ADtico%3A%0A"><svg viewBox="0 0 128 128"><use href="#icon-broom"></use></svg>Manda a lista</a>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <span>Shopify App-Stack Exorcism · Auditoria de 48h</span>
+      <span>Menos boleto · loja mais leve · menos encosto com mensalidade</span>
+    </footer>
+  </div>
+</body>
+</html>
