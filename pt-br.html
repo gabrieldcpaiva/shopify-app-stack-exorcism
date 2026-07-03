@@ -3,15 +3,15 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Shopify App-Stack Exorcism · Auditoria de 48h</title>
-<meta name="description" content="Auditoria de 48h para lojas Shopify: mapa do que corta, fica, assombra e pode quebrar antes da próxima promoção.">
+<title>Raio-X Shopify 24h · Loja mais leve</title>
+<meta name="description" content="Raio-X em 24h para lojas Shopify: carrinho perdido, app sobrando, checkout estranho, boleto inútil e o que arrumar primeiro.">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Shopify App-Stack Exorcism · Auditoria de 48h">
-<meta property="og:description" content="Seus apps da Shopify montaram uma prefeitura dentro da sua loja. Manda a lista de apps; eu levo a vassoura.">
+<meta property="og:title" content="Raio-X Shopify 24h · Loja mais leve">
+<meta property="og:description" content="Sua lojinha vendia e depois travou? Carrinho sumindo? Cliente antigo desapareceu? Chama no WhatsApp.">
 <meta property="og:image" content="exports/quote_card_ptbr_prefeitura.png">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Shopify App-Stack Exorcism · Auditoria de 48h">
-<meta name="twitter:description" content="Mapa corta / fica / risco, scripts fantasmas e mensalidade escondida. Sem palestra. Só vassoura.">
+<meta name="twitter:title" content="Raio-X Shopify 24h · Loja mais leve">
+<meta name="twitter:description" content="Carrinho perdido, app sobrando, checkout estranho e boleto inútil. Chama no WhatsApp.">
 <meta name="twitter:image" content="exports/quote_card_ptbr_prefeitura.png">
 <style>
   :root {
@@ -120,6 +120,8 @@
   .price ul { margin:14px 0 0 18px; color:var(--body); font-size:14px; }
   .payment-note { grid-column:1/-1; border:1px dashed rgba(20,20,19,.28); background:rgba(255,255,255,.55); border-radius:12px; padding:16px 18px; color:var(--body); font-size:15px; }
   .payment-note strong { color:var(--ink); }
+  .payment-badges { display:flex; gap:8px; flex-wrap:wrap; margin-top:12px; }
+  .payment-badge { display:inline-flex; align-items:center; border:1.5px solid var(--ink); border-radius:999px; padding:6px 10px; background:var(--paper); color:var(--ink); font-family:var(--mono); font-size:12px; }
   .flag { display:inline-block; border-radius:999px; padding:4px 9px; background:rgba(217,119,87,.09); color:var(--clay); font-size:10px; text-transform:uppercase; letter-spacing:.08em; margin-bottom:11px; }
 
   .how { counter-reset:step; }
@@ -128,6 +130,7 @@
 
   .cta { background:rgba(255,255,255,.86); border:2px solid var(--ink); border-radius:22px; padding:34px; display:grid; grid-template-columns:1fr auto; gap:22px; align-items:center; }
   .cta h2 { margin-bottom:8px; }
+  .whatsapp-float { position:fixed; right:18px; bottom:18px; z-index:5; display:inline-flex; align-items:center; gap:9px; padding:13px 16px; border-radius:999px; background:#1FAF5B; color:white; border:2px solid #12753D; text-decoration:none; font-family:var(--mono); font-size:12px; box-shadow:0 10px 26px rgba(20,20,19,.18); }
   .footer { margin-top:32px; padding-top:18px; border-top:var(--border); color:var(--muted); font-size:11px; display:flex; justify-content:space-between; gap:12px; flex-wrap:wrap; }
 
   @media (max-width:960px) {
@@ -163,7 +166,7 @@
 
   <div class="page">
     <header class="topbar">
-      <div class="brand"><span class="brand-mark"><svg viewBox="0 0 128 128"><use href="#icon-broom"></use></svg></span><span>Shopify App-Stack Exorcism</span></div>
+      <div class="brand"><span class="brand-mark"><svg viewBox="0 0 128 128"><use href="#icon-broom"></use></svg></span><span>Raio-X Shopify 24h</span></div>
       <nav class="nav" aria-label="Seções da página">
         <a href="#problema">Problema</a>
         <a href="#entrega">Entrega</a>
@@ -175,15 +178,15 @@
     <main>
       <section class="hero">
         <div>
-          <p class="eyebrow">Auditoria de 48h para lojas Shopify / operação DTC</p>
-          <h1>Seus apps da Shopify montaram uma prefeitura dentro da sua loja.</h1>
-          <p class="lead">Uma auditoria de 48h para descobrir o que fica, o que sai, e quais <strong>scripts fantasmas</strong> ainda estão pesando sua loja.</p>
-          <p class="lead"><strong>Mapa de corte, permanência e risco — antes da próxima promoção travar por causa de uma reunião de app.</strong></p>
+          <p class="eyebrow">Raio-X em 24h para loja Shopify / loja online</p>
+          <h1>Sua lojinha vendia bem e depois começou a travar?</h1>
+          <p class="lead"><strong>Carrinho sumindo? Cliente antigo desapareceu? App cobrando todo mês e ninguém lembra por quê?</strong></p>
+          <p class="lead">Eu olho sua loja, encontro o que está pesando, separo o que fica, o que sai e o que pode quebrar se mexer sem cuidado.</p>
           <div class="hero-actions">
-            <a class="button primary" href="mailto:gabriel@theflowyway.com?subject=Auditoria%20Shopify%20App-Stack%20Exorcism&body=Minha%20lista%20de%20apps%20/%20Loom%20de%203%20minutos%3A%0A%0ALoja%3A%0ADor%20principal%3A%0AApps%20suspeitos%3A%0APromo%C3%A7%C3%A3o%20ou%20fluxo%20cr%C3%ADtico%3A%0A"><svg viewBox="0 0 128 128"><use href="#icon-broom"></use></svg>Manda a lista de apps</a>
-            <a class="button secondary" href="#entrega">Ver o relatório</a>
+            <a class="button primary" href="https://wa.me/55339984232513?text=Oi%20Gabriel%2C%20vi%20o%20Raio-X%20Shopify%2024h.%20Minha%20loja%20esta%20com%20apps%20demais%2C%20carrinho%20perdido%20ou%20checkout%20estranho.%20Quero%20entender%20se%20vale%20olhar." target="_blank" rel="noopener"><svg viewBox="0 0 128 128"><use href="#icon-broom"></use></svg>Chamar no WhatsApp</a>
+            <a class="button secondary" href="#preco">Ver preços</a>
           </div>
-          <p class="microcopy">Sem palestra de crescimento. Sem “hack”. Só uma vassoura e um relatório honesto.</p>
+          <p class="microcopy">Sem palestra. Sem promessa mágica. Só olhar honesto e próxima ação clara.</p>
         </div>
 
         <div class="card hero-card" aria-label="Resumo da oferta">
@@ -196,7 +199,8 @@
             <div class="notice-label">Notificação operacional</div>
             <div class="price-note">
               <div class="amount">R$497</div>
-              <p>Auditoria inicial para lojas menores com uma stack moderada. PIX, cartão e parcelamento disponíveis.</p>
+              <p>Raio-X para lojas menores com app demais, carrinho caindo ou checkout estranho.</p>
+              <div class="payment-badges" aria-label="Formas de pagamento"><span class="payment-badge">PIX</span><span class="payment-badge">💳 cartão</span><span class="payment-badge">12x</span><span class="payment-badge">🔗 link seguro</span></div>
             </div>
           </div>
           <div class="stamp">Prefeitura<br>detectada</div>
@@ -223,7 +227,7 @@
       </section>
 
       <section class="section outcome-band" aria-label="Resultado principal">
-        <h2>Em 48 horas, você recebe um mapa de limpeza que dá para usar.</h2>
+        <h2>Em 24 horas, você recebe um mapa simples do que arrumar primeiro.</h2>
         <div class="outcome-list">
           <div class="check">o que cortar porque virou entulho, duplicidade ou boleto sem explicação.</div>
           <div class="check">o que manter porque paga o próprio aluguel e segura fluxo crítico.</div>
@@ -266,10 +270,10 @@
           <h2>Valor fechado. Resultado chato. Sem pântano de consultoria.</h2>
         </aside>
         <div class="pricing">
-          <div class="card price"><span class="flag">Entrada</span><h3>Raio-X inicial</h3><div class="amount">R$197</div><p>Para descobrir se vale abrir a vassoura sem comprar uma auditoria inteira.</p><ul><li>Olhar inicial na lista de apps</li><li>2–3 suspeitos principais</li><li>Crédito na auditoria se avançar</li></ul></div>
-          <div class="card price featured"><span class="flag">Melhor encaixe</span><h3>Auditoria inicial</h3><div class="amount">R$497</div><p>Para lojas menores com uma stack moderada e sinais claros de boleto, lentidão ou script fantasma.</p><ul><li>Memorando de limpeza</li><li>Tabela corta / fica / risco</li><li>Sem implementação</li></ul></div>
+          <div class="card price"><span class="flag">Entrada</span><h3>Raio-X inicial</h3><div class="amount">R$197</div><p>Para descobrir se a bagunça está custando venda antes de comprar uma auditoria inteira.</p><ul><li>Olhar inicial na lista de apps</li><li>2–3 suspeitos principais</li><li>Crédito na auditoria se avançar</li></ul></div>
+          <div class="card price featured"><span class="flag">Melhor encaixe</span><h3>Auditoria inicial</h3><div class="amount">R$497</div><p>Para loja com carrinho perdido, cliente sumindo, boleto escondido, lentidão ou checkout estranho.</p><ul><li>Memorando de limpeza</li><li>Tabela corta / fica / risco</li><li>Sem implementação</li></ul></div>
           <div class="card price"><span class="flag">Operação</span><h3>Auditoria de operação</h3><div class="amount">R$997+</div><p>Para lojas com assinatura, suporte, tracking, fulfillment, estoque ou fluxo caseiro.</p><ul><li>Passada de risco mais funda</li><li>Notas de dependência</li><li>Sequência de limpeza</li></ul></div>
-          <div class="payment-note"><strong>Pagamento:</strong> PIX à vista, cartão/QR-code e parcelamento por link bancário. Mutirão de limpeza só é cotado depois da auditoria, se for seguro e valer a pena.</div>
+          <div class="payment-note"><strong>Pagamento:</strong><div class="payment-badges" aria-label="Formas de pagamento"><span class="payment-badge">PIX</span><span class="payment-badge">💳 cartão</span><span class="payment-badge">12x parcelado</span><span class="payment-badge">🔗 link seguro</span></div>Mutirão de limpeza só é cotado depois da auditoria, se for seguro e valer a pena.</div>
         </div>
       </section>
 
@@ -288,17 +292,18 @@
       <section id="comecar" class="section cta">
         <div>
           <p class="section-kicker">Comece aqui</p>
-          <h2>Manda a lista de apps ou um Loom de 3 minutos.</h2>
-          <p>Eu digo se a loja parece valer uma auditoria. Se os gremlins estiverem quietos por enquanto, eu falo também e poupo o circo pequeno.</p>
+          <h2>Quer saber onde sua loja está perdendo dinheiro?</h2>
+          <p>Me chama no WhatsApp. Se não valer auditoria, eu falo. Se tiver bagunça custando venda, a gente começa pelo menor passo.</p>
         </div>
-        <a class="button primary" href="mailto:gabriel@theflowyway.com?subject=Auditoria%20Shopify%20App-Stack%20Exorcism&body=Minha%20lista%20de%20apps%20/%20Loom%20de%203%20minutos%3A%0A%0ALoja%3A%0ADor%20principal%3A%0AApps%20suspeitos%3A%0APromo%C3%A7%C3%A3o%20ou%20fluxo%20cr%C3%ADtico%3A%0A"><svg viewBox="0 0 128 128"><use href="#icon-broom"></use></svg>Manda a lista</a>
+        <a class="button primary" href="https://wa.me/55339984232513?text=Oi%20Gabriel%2C%20vi%20o%20Raio-X%20Shopify%2024h.%20Minha%20loja%20esta%20com%20apps%20demais%2C%20carrinho%20perdido%20ou%20checkout%20estranho.%20Quero%20entender%20se%20vale%20olhar." target="_blank" rel="noopener"><svg viewBox="0 0 128 128"><use href="#icon-broom"></use></svg>Chamar no WhatsApp</a>
       </section>
     </main>
 
     <footer class="footer">
-      <span>Shopify App-Stack Exorcism · Auditoria de 48h</span>
-      <span>Menos boleto · loja mais leve · menos encosto com mensalidade</span>
+      <span>Raio-X Shopify 24h · loja mais leve</span>
+      <span>Menos boleto · menos carrinho perdido · WhatsApp: +55 33 99842-2513</span>
     </footer>
   </div>
+  <a class="whatsapp-float" href="https://wa.me/55339984232513?text=Oi%20Gabriel%2C%20vi%20o%20Raio-X%20Shopify%2024h.%20Minha%20loja%20esta%20com%20apps%20demais%2C%20carrinho%20perdido%20ou%20checkout%20estranho.%20Quero%20entender%20se%20vale%20olhar." target="_blank" rel="noopener" aria-label="Chamar Gabriel no WhatsApp">WhatsApp</a>
 </body>
 </html>
