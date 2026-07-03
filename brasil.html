@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Gabriel Paiva · Venda online sem bagunça</title>
+<meta name="description" content="Três portas simples para brasileiros vendendo online: Raio-X Shopify 24h, carrinho/checkout perdido e página honesta com WhatsApp.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Gabriel Paiva · Venda online sem bagunça">
+<meta property="og:description" content="Sua lojinha vendia e depois travou? Carrinho sumindo? Cliente antigo desapareceu? Chama no WhatsApp.">
+<style>
+  :root {
+    --paper:#FAF9F5; --ink:#141413; --body:#3D3D3A; --muted:#87867F;
+    --grid:#D1CFC5; --soft:#F0EEE6; --clay:#D97757; --olive:#788C5D;
+    --border:1.5px solid var(--grid);
+    --serif:ui-serif, Georgia, "Times New Roman", serif;
+    --sans:system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    --mono:ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  body {
+    min-height:100vh; padding:30px 18px 88px; color:var(--body); font-family:var(--sans); line-height:1.55;
+    background:
+      radial-gradient(circle at 1px 1px, rgba(20,20,19,.11) 1px, transparent 0) 0 0 / 28px 28px,
+      linear-gradient(90deg, rgba(209,207,197,.22) 1px, transparent 1px) 0 0 / 84px 84px,
+      var(--paper);
+  }
+  .page { max-width:1060px; margin:0 auto; }
+  .topbar { display:flex; justify-content:space-between; align-items:center; gap:16px; padding-bottom:16px; border-bottom:var(--border); margin-bottom:34px; }
+  .brand, .kicker, .tag, .button, label, .footer { font-family:var(--mono); }
+  .brand { display:flex; align-items:center; gap:10px; color:var(--muted); font-size:12px; letter-spacing:.08em; text-transform:uppercase; }
+  .brand-mark { width:30px; height:30px; display:grid; place-items:center; border:1.5px solid var(--ink); border-radius:50%; }
+  .brand-mark:before { content:"✦"; color:var(--ink); }
+  .nav { display:flex; gap:14px; flex-wrap:wrap; justify-content:flex-end; }
+  .nav a { color:var(--muted); text-decoration:none; font-family:var(--mono); font-size:12px; }
+  .hero { display:grid; grid-template-columns:minmax(0,1fr) 340px; gap:28px; align-items:stretch; }
+  .kicker { color:var(--muted); font-size:11px; letter-spacing:.09em; text-transform:uppercase; margin-bottom:12px; }
+  h1 { color:var(--ink); font-family:var(--serif); font-weight:500; letter-spacing:-.04em; line-height:.94; font-size:clamp(44px,8vw,86px); max-width:780px; }
+  h2 { color:var(--ink); font-family:var(--serif); font-weight:500; letter-spacing:-.02em; line-height:1.02; font-size:clamp(30px,4.6vw,48px); margin-bottom:12px; }
+  h3 { color:var(--ink); font-family:var(--serif); font-size:25px; line-height:1.05; font-weight:500; margin-bottom:10px; }
+  .lead { margin-top:20px; font-size:20px; max-width:760px; }
+  .lead strong { color:var(--ink); }
+  .actions { display:flex; flex-wrap:wrap; gap:12px; margin-top:26px; }
+  .button { display:inline-flex; justify-content:center; align-items:center; gap:9px; border-radius:999px; padding:12px 18px; border:1.5px solid var(--ink); text-decoration:none; color:var(--ink); font-size:12px; letter-spacing:.02em; background:rgba(250,249,245,.68); }
+  .button.primary { background:var(--ink); color:var(--paper); }
+  .button.green { background:#1FAF5B; color:white; border-color:#12753D; }
+  .micro { margin-top:12px; color:var(--muted); font-size:13px; }
+  .card { background:rgba(255,255,255,.84); border:var(--border); border-radius:14px; padding:22px; box-shadow:0 12px 35px rgba(20,20,19,.035); }
+  .proof-card { display:flex; flex-direction:column; justify-content:space-between; min-height:370px; }
+  .price { font-family:var(--serif); color:var(--ink); font-size:64px; line-height:1; letter-spacing:-.045em; margin:20px 0 8px; }
+  .badges { display:flex; gap:8px; flex-wrap:wrap; margin-top:14px; }
+  .badge { border:1.5px solid var(--ink); border-radius:999px; padding:6px 10px; background:var(--paper); color:var(--ink); font-family:var(--mono); font-size:12px; }
+  .section { margin-top:66px; }
+  .doors { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; }
+  .door { min-height:318px; display:flex; flex-direction:column; justify-content:space-between; }
+  .door ul { margin:12px 0 0 18px; font-size:14px; }
+  .tag { display:inline-block; color:var(--clay); background:rgba(217,119,87,.09); border-radius:999px; padding:4px 9px; font-size:10px; letter-spacing:.08em; text-transform:uppercase; margin-bottom:12px; }
+  .question-strip { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; }
+  .question { min-height:150px; display:flex; flex-direction:column; justify-content:space-between; }
+  .question p { color:var(--ink); font-family:var(--serif); font-size:28px; line-height:1.04; }
+  .form-wrap { display:grid; grid-template-columns:320px minmax(0,1fr); gap:22px; align-items:start; }
+  form { display:grid; gap:13px; }
+  label { color:var(--muted); font-size:11px; letter-spacing:.08em; text-transform:uppercase; }
+  input, select, textarea { width:100%; border:1.5px solid var(--grid); border-radius:10px; padding:12px 13px; background:white; color:var(--ink); font:16px var(--sans); }
+  textarea { min-height:112px; resize:vertical; }
+  .hidden { display:none; }
+  .footer { margin-top:32px; padding-top:18px; border-top:var(--border); color:var(--muted); font-size:11px; display:flex; justify-content:space-between; gap:12px; flex-wrap:wrap; }
+  .whatsapp-float { position:fixed; right:18px; bottom:18px; z-index:5; }
+  @media (max-width:900px) { .hero, .doors, .question-strip, .form-wrap { grid-template-columns:1fr; } .nav { display:none; } .proof-card { min-height:auto; } }
+  @media (max-width:560px) { body { padding:24px 14px 76px; } .price { font-size:54px; } .card { padding:18px; } }
+</style>
+</head>
+<body>
+  <div class="page">
+    <header class="topbar">
+      <div class="brand"><span class="brand-mark"></span><span>Gabriel Paiva · Brasil vende online</span></div>
+      <nav class="nav" aria-label="Seções">
+        <a href="#portas">Portas</a>
+        <a href="#triagem">Triagem</a>
+        <a href="/pt-br.html">Raio-X Shopify</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div>
+          <p class="kicker">Página de entrada para brasileiros vendendo online</p>
+          <h1>Sua loja, página ou WhatsApp está perdendo venda em silêncio?</h1>
+          <p class="lead"><strong>Carrinho sumindo? Cliente antigo desapareceu? Muita gente perguntando preço e ninguém fechando?</strong></p>
+          <p class="lead">Eu não começo com palestra. Começo olhando onde o dinheiro está vazando e qual é o menor conserto honesto.</p>
+          <div class="actions">
+            <a class="button primary" href="#triagem">Responder 5 perguntas</a>
+            <a class="button green" href="https://wa.me/55339984232513?text=Oi%20Gabriel%2C%20vi%20a%20pagina%20Brasil%20vende%20online.%20Quero%20entender%20qual%20porta%20faz%20mais%20sentido%20pra%20minha%20loja%20ou%20servico." target="_blank" rel="noopener">Chamar no WhatsApp</a>
+          </div>
+          <p class="micro">PIX · 💳 cartão · 12x · link seguro · sem agência gritando no seu ouvido.</p>
+        </div>
+        <aside class="card proof-card" aria-label="Resumo rápido">
+          <div>
+            <p class="kicker">Entrada simples</p>
+            <div class="price">R$197</div>
+            <p>Primeiro olhar pago quando você só precisa saber se a bagunça vale conserto.</p>
+            <div class="badges"><span class="badge">PIX</span><span class="badge">💳 cartão</span><span class="badge">12x</span><span class="badge">🔗 link seguro</span></div>
+          </div>
+          <p class="micro">Se não for caso pra mim, eu digo. Melhor um não honesto do que mais uma ferramenta inútil.</p>
+        </aside>
+      </section>
+
+      <section class="section question-strip" aria-label="Perguntas de dor">
+        <div class="card question"><p>Sua lojinha vendia bem e depois começou a travar?</p><span class="kicker">loja online</span></div>
+        <div class="card question"><p>Aquele cliente que comprava toda semana sumiu?</p><span class="kicker">recorrência</span></div>
+        <div class="card question"><p>Está perdendo muito carrinho e fingindo que é normal?</p><span class="kicker">checkout</span></div>
+      </section>
+
+      <section id="portas" class="section">
+        <p class="kicker">Três portas abertas agora</p>
+        <h2>Não é uma empresa gigante. É o menor conserto que pode virar dinheiro.</h2>
+        <div class="doors">
+          <article class="card door">
+            <div>
+              <span class="tag">Loja Shopify</span>
+              <h3>Raio-X Shopify 24h</h3>
+              <p>Para loja com app demais, checkout estranho, boleto inútil, carrinho caindo ou painel mentindo.</p>
+              <ul>
+                <li>R$197 entrada</li>
+                <li>R$497 auditoria inicial</li>
+                <li>mapa corta / fica / risco</li>
+              </ul>
+            </div>
+            <a class="button" href="/pt-br.html">Ver página Shopify</a>
+          </article>
+
+          <article class="card door">
+            <div>
+              <span class="tag">Carrinho perdido</span>
+              <h3>Checkout Bot / Recuperação</h3>
+              <p>Para quem tem gente chegando, colocando produto no carrinho e indo embora antes de pagar.</p>
+              <ul>
+                <li>cálculo do vazamento</li>
+                <li>mensagem de recuperação</li>
+                <li>primeiro bot/fluxo em 48h</li>
+              </ul>
+            </div>
+            <a class="button" href="https://wa.me/55339984232513?text=Oi%20Gabriel%2C%20meu%20problema%20principal%20e%20carrinho%20perdido%20ou%20checkout.%20Quero%20entender%20o%20Checkout%20Bot." target="_blank" rel="noopener">Falar sobre carrinho</a>
+          </article>
+
+          <article class="card door">
+            <div>
+              <span class="tag">Serviço local</span>
+              <h3>Página Honesta com WhatsApp</h3>
+              <p>Para salão, estética, comida, limpeza, aula, conserto, artesanato ou brasileiro vendendo fora do Brasil.</p>
+              <ul>
+                <li>página simples</li>
+                <li>botão de WhatsApp</li>
+                <li>texto claro pra grupo e bio</li>
+              </ul>
+            </div>
+            <a class="button" href="https://wa.me/55339984232513?text=Oi%20Gabriel%2C%20quero%20uma%20pagina%20honesta%20com%20botao%20de%20WhatsApp%20para%20divulgar%20meu%20servico." target="_blank" rel="noopener">Falar sobre página</a>
+          </article>
+        </div>
+      </section>
+
+      <section id="triagem" class="section form-wrap">
+        <aside>
+          <p class="kicker">Triagem rápida</p>
+          <h2>Me dá o mínimo para eu não chutar.</h2>
+          <p>Formulário curto. Se preferir, manda no WhatsApp. O objetivo é decidir a porta certa, não te prender num funil.</p>
+        </aside>
+        <form name="triagem-brasil-vende-online" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/obrigado.html" class="card">
+          <input type="hidden" name="form-name" value="triagem-brasil-vende-online">
+          <p class="hidden"><label>Não preencher: <input name="bot-field"></label></p>
+          <div>
+            <label for="nome">Seu nome</label>
+            <input id="nome" name="nome" autocomplete="name" required>
+          </div>
+          <div>
+            <label for="whatsapp">WhatsApp</label>
+            <input id="whatsapp" name="whatsapp" inputmode="tel" autocomplete="tel" required>
+          </div>
+          <div>
+            <label for="link">Link da loja, Instagram ou site</label>
+            <input id="link" name="link" inputmode="url" placeholder="https://...">
+          </div>
+          <div>
+            <label for="porta">O que mais parece seu caso?</label>
+            <select id="porta" name="porta" required>
+              <option value="">Escolher</option>
+              <option>Tenho Shopify / loja online bagunçada</option>
+              <option>Estou perdendo carrinho / checkout</option>
+              <option>Preciso de uma página simples com WhatsApp</option>
+              <option>Não sei — só sei que está vazando venda</option>
+            </select>
+          </div>
+          <div>
+            <label for="dor">O que está acontecendo?</label>
+            <textarea id="dor" name="dor" placeholder="Ex: vendia toda semana e agora parou; carrinho abandonado; app cobrando; muita pergunta e pouca venda..." required></textarea>
+          </div>
+          <button class="button primary" type="submit">Enviar triagem</button>
+          <a class="button green" href="https://wa.me/55339984232513?text=Oi%20Gabriel%2C%20quero%20fazer%20a%20triagem%20rapida%20pelo%20WhatsApp." target="_blank" rel="noopener">Prefiro WhatsApp</a>
+        </form>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <span>Gabriel Paiva · venda online sem bagunça</span>
+      <span>WhatsApp: +55 33 99842-2513 · gabriel@theflowyway.com</span>
+    </footer>
+  </div>
+  <a class="button green whatsapp-float" href="https://wa.me/55339984232513?text=Oi%20Gabriel%2C%20vi%20a%20pagina%20Brasil%20vende%20online.%20Quero%20entender%20qual%20porta%20faz%20mais%20sentido%20pra%20minha%20loja%20ou%20servico." target="_blank" rel="noopener">WhatsApp</a>
+</body>
+</html>
